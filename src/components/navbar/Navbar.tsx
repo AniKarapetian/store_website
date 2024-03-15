@@ -12,7 +12,7 @@ const MenuNavbar: FC = () => {
   const isLoggedIn = useSelector(loginSelector);
   const onLogout = () => {
     signOut();
-    navigate("/login");
+    navigate("/sign-in");
   };
   return (
     <Navbar bg="dark" data-bs-theme="dark">
@@ -23,11 +23,13 @@ const MenuNavbar: FC = () => {
               {name}
             </Nav.Link>
           ))}
-          {!isLoggedIn && <Nav.Link href="/login">Login</Nav.Link>}
+          {!isLoggedIn && <Nav.Link href="/sign-in">Sign In</Nav.Link>}
+          {!isLoggedIn && <Nav.Link href="/sign-up">Sign Up</Nav.Link>}
         </Nav>
         <Nav>
-          {isLoggedIn && <Nav.Link onClick={onLogout}>Logout</Nav.Link>}
+          {isLoggedIn && <Nav.Link onClick={onLogout}>Sign Out</Nav.Link>}
         </Nav>
+        <Nav>{isLoggedIn && <Nav.Link href="/profile">Profile</Nav.Link>}</Nav>
       </Container>
     </Navbar>
   );

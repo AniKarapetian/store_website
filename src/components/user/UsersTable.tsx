@@ -1,27 +1,28 @@
 import React, { FC, useState } from "react";
 import { Table, Button } from "react-bootstrap";
-import { UserData } from "../../types/types";
 import { createUser, removeUser, updateUser } from "../../store/user/actions";
 import UserModal from "./UserModal";
+import { User } from "./type";
 type TableProps = {
-  users: UserData[];
+  users: User[];
 };
 
 const UsersTable: FC<TableProps> = ({ users }) => {
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState<UserData>({
+  const [user, setUser] = useState<User>({
     id: "",
     email: "",
-    name: "",
-    lastname: "",
-    age: 0,
+    firstName: "",
+    lastName: "",
+    phone: "",
+    role: "",
   });
 
   const handleAdd = () => {
     toggleModal();
   };
 
-  const handleSave = (user: UserData) => {
+  const handleSave = (user: User) => {
     if (user.id) {
       updateUser(user);
     } else {
@@ -34,9 +35,10 @@ const UsersTable: FC<TableProps> = ({ users }) => {
     setUser({
       id: "",
       email: "",
-      name: "",
-      lastname: "",
-      age: 0,
+      firstName: "",
+      lastName: "",
+      phone: "",
+      role: "",
     });
   };
 
@@ -47,7 +49,7 @@ const UsersTable: FC<TableProps> = ({ users }) => {
     removeUser(id);
   };
 
-  const handleEdit = (user: UserData) => {
+  const handleEdit = (user: User) => {
     setUser({ ...user });
     toggleModal();
   };
@@ -63,7 +65,8 @@ const UsersTable: FC<TableProps> = ({ users }) => {
             <th>Name</th>
             <th>Lastname</th>
             <th>Email</th>
-            <th>Age</th>
+            <th>Phone</th>
+            <th>Role</th>
             <th></th>
             <th></th>
           </tr>
@@ -73,10 +76,11 @@ const UsersTable: FC<TableProps> = ({ users }) => {
             return (
               <tr key={user.id}>
                 <td>{user.id}</td>
-                <td>{user.name}</td>
-                <td>{user.lastname}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
                 <td>{user.email}</td>
-                <td>{user.age}</td>
+                <td>{user.phone}</td>
+                <td>{user.role}</td>
                 <td>
                   <Button
                     variant="secondary"

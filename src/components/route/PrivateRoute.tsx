@@ -12,7 +12,7 @@ interface PrivateRouteProps extends RouteProps {
 const PrivateRoute: React.FC<PrivateRouteProps> = ({
   component: Component,
   isLoggedIn,
-  redirectTo = "/login",
+  redirectTo = "/sign-in",
   ...rest
 }) => (
   <Route

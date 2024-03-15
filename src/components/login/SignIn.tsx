@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import { LoginData } from "../../types/types";
+// import { SignInData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../store/login/actions";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -7,16 +7,16 @@ import Form from "react-bootstrap/Form";
 
 import { Button, Container } from "react-bootstrap";
 
-const Login: React.FC = () => {
+const SignIn: React.FC = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState<LoginData>({
+  const [data, setData] = useState<any>({
     email: "",
     password: "",
   });
 
   const [error, setError] = useState("");
 
-  const handleLogin = async () => {
+  const handleSignIn = async () => {
     if (!data.email || !data.password) {
       setError("Please enter both email and password");
       return;
@@ -38,12 +38,12 @@ const Login: React.FC = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   return (
-    <Container>
-      <h2>Login</h2>
+    <Container style={{ width: "450px" }}>
+      <h2>Sign In</h2>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <Form>
         <InputGroup className="mb-3">
-          <InputGroup.Text>Username</InputGroup.Text>
+          <InputGroup.Text>Email</InputGroup.Text>
           <Form.Control
             type="email"
             value={data.email}
@@ -60,12 +60,12 @@ const Login: React.FC = () => {
             onChange={handleChange}
           />
         </InputGroup>
-        <Button type="button" onClick={handleLogin} variant="success">
-          Login
+        <Button type="button" onClick={handleSignIn} variant="success">
+          SignIn
         </Button>
       </Form>
     </Container>
   );
 };
 
-export default Login;
+export default SignIn;

@@ -3,18 +3,13 @@ import { FC } from "react";
 import { Button, Modal } from "react-bootstrap";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import { User } from "./type";
-interface ModalProps {
-  data: User;
-  onSave: (user: User) => void;
-  onCancel: () => void;
-}
+import { ModalProps, Product } from "./type";
 
-const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
-  const [user, setUser] = useState<User>({ ...data });
+const ProductModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
+  const [product, setProduct] = useState<Product>({ ...data });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setProduct({ ...product, [e.target.name]: e.target.value });
   };
   return (
     <div
@@ -23,52 +18,52 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
     >
       <Modal show onHide={onCancel}>
         <Modal.Header>
-          <Modal.Title>User</Modal.Title>
+          <Modal.Title>Product</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
           <InputGroup className="mb-3">
-            <InputGroup.Text>Name</InputGroup.Text>
+            <InputGroup.Text>Title</InputGroup.Text>
             <Form.Control
               type="text"
-              value={user.firstName}
-              name="name"
+              value={product.title}
+              name="title"
               onChange={handleChange}
             />
           </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text>Lastname</InputGroup.Text>
+            <InputGroup.Text>Description</InputGroup.Text>
             <Form.Control
               type="text"
-              value={user.lastName}
-              name="lastname"
+              value={product.description}
+              name="description"
               onChange={handleChange}
             />
           </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text>Email</InputGroup.Text>
+            <InputGroup.Text>Image</InputGroup.Text>
             <Form.Control
-              type="email"
-              value={user.email}
-              name="email"
+              type="text"
+              value={product.imageUrl}
+              name="imageUrl"
               onChange={handleChange}
             />
           </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text>Phone</InputGroup.Text>
+            <InputGroup.Text>Count</InputGroup.Text>
             <Form.Control
-              type="string"
-              value={user.phone}
-              name="phone"
+              type="number"
+              value={product.count}
+              name="count"
               onChange={handleChange}
             />
           </InputGroup>
           <InputGroup className="mb-3">
-            <InputGroup.Text>Role</InputGroup.Text>
+            <InputGroup.Text>Price</InputGroup.Text>
             <Form.Control
-              type="string"
-              value={user.role}
-              name="role"
+              type="number"
+              value={product.price}
+              name="price"
               onChange={handleChange}
             />
           </InputGroup>
@@ -78,7 +73,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
           <Button variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
-          <Button variant="success" onClick={() => onSave(user)}>
+          <Button variant="success" onClick={() => onSave(product)}>
             Save
           </Button>
         </Modal.Footer>
@@ -87,4 +82,4 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
   );
 };
 
-export default UserModal;
+export default ProductModal;
