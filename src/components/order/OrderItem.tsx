@@ -1,16 +1,16 @@
 import React from "react";
 import { Card } from "react-bootstrap";
-import { Product } from "../product/type";
+import { BasketItem } from "../basket/type";
 
-export const OrderItem: React.FC<{ product: Product }> = ({ product }) => {
+export const OrderItem: React.FC<{ item: BasketItem }> = ({ item }) => {
   return (
     <Card>
-      <Card.Img variant="top" src={product.imageUrl} />
+      <Card.Img variant="top" src={item.imageUrl} height={150} />
       <Card.Body>
-        <Card.Title>{product.title}</Card.Title>
-        <Card.Text>{product.description}</Card.Text>
-        <Card.Text>Price: {product.price} AMD</Card.Text>
-        <Card.Text>Quantity: {product.count}</Card.Text>
+        <Card.Title>{item.title}</Card.Title>
+        <Card.Text>Quantity: {item.quantity}</Card.Text>
+        <Card.Text>Price: {item.price} AMD</Card.Text>
+        <Card.Text>Total Price: {item.quantity * item.price} AMD</Card.Text>
       </Card.Body>
     </Card>
   );

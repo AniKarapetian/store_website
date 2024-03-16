@@ -15,4 +15,5 @@ export type StateType<T> = {
   loading: boolean;
   error: string | null;
   data: T[];
+  item?: T | null;
 };

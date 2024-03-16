@@ -2,20 +2,21 @@ import React, { FC, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import { BasketItem } from "./type";
 import { Icon } from "../base-components/Icon";
+import { useDispatch } from "react-redux";
+import { updateBasket } from "../../store/basket/basket-slice";
 
 type TableProps = {
   basketItems: BasketItem[];
 };
 
 const BasketTable: FC<TableProps> = ({ basketItems }) => {
-  const handleDelete = (id: string) => {
-    // removeUser(id);
+  const dispatch = useDispatch();
+  const removeItem = (id: string) => {
+    dispatch(updateBasket({}) as any);
   };
 
-  // const handleEdit = (item: User) => {
-  //   setUser({ ...item });
-  //   toggleModal();
-  // };
+  const updateItemCount = (step: number) => {};
+
   return (
     <div>
       <Table striped bordered hover>
@@ -47,7 +48,7 @@ const BasketTable: FC<TableProps> = ({ basketItems }) => {
                 <td>
                   <Icon
                     iconName="XCircle"
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() => removeItem(item.id!)}
                     color="red"
                   />
                 </td>

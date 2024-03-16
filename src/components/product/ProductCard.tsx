@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import { FC } from "react";
 import { IProductPageProps, Product } from "./type";
-import { Card, Button, Col } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { Icon } from "../base-components/Icon";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
-import { remove, update } from "../../store/products/products-slice";
 import ProductModal from "./ProductModal";
+import {
+  removeProduct,
+  updateProduct,
+} from "../../store/products/products-slice";
+import { updateBasket } from "../../store/basket/basket-slice";
+import { basketSelector } from "../../store/basket/basket-selector";
+import { BasketItem } from "../basket/type";
+import { v4 as uuid } from "uuid";
 export const ProductCard: FC<IProductPageProps> = ({ product }) => {
   const navigate = useNavigate();
   const user = useSelector(userSelector);
+  const basket = useSelector(basketSelector);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [productData, setProduct] = useState<Product>({
@@ -22,7 +30,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
     price: 0,
   });
   const handleDelete = (id: string) => {
-    dispatch(remove(id) as any);
+    dispatch(removeProduct(id) as any);
   };
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -31,12 +39,30 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
     setProduct({ ...product });
     toggleModal();
   };
+
+  const addToBasket = (product: Product) => {
+    const basketItem: BasketItem = {
+      id: uuid(),
+      title: product.title,
+      quantity: 1,
+      price: product.price,
+      imageUrl: product.imageUrl,
+    };
+
+    dispatch(
+      updateBasket({
+        id: basket?.id,
+        userId: basket!.userId,
+        items: [...basket!.items, basketItem],
+      }) as any
+    );
+  };
   const openDetails = () => {
     navigate("/products/1");
   };
 
   const handleSave = (product: Product) => {
-    dispatch(update(product) as any);
+    dispatch(updateProduct(product) as any);
     handleCancel();
   };
   const handleCancel = () => {
@@ -58,29 +84,36 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
           <Card.Link onClick={openDetails}>{product.title}</Card.Link>
 
           <Card.Text>{product.price} AMD</Card.Text>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Button variant="success">
-              <Icon iconName="BagPlus" />
-            </Button>
-            {user?.role === "admin" && (
-              <>
-                <Button
-                  variant="secondary"
-                  onClick={() => {
-                    handleEdit(product);
-                  }}
-                >
-                  <Icon iconName="Pencil" />
-                </Button>
-                <Button
-                  onClick={() => handleDelete(product.id)}
-                  variant="danger"
-                >
-                  <Icon iconName="Trash" />
-                </Button>
-              </>
-            )}
-          </div>
+          {user && (
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="success"
+                onClick={() => {
+                  addToBasket(product);
+                }}
+              >
+                <Icon iconName="BagPlus" />
+              </Button>
+              {user?.role === "admin" && (
+                <>
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      handleEdit(product);
+                    }}
+                  >
+                    <Icon iconName="Pencil" />
+                  </Button>
+                  <Button
+                    onClick={() => handleDelete(product.id)}
+                    variant="danger"
+                  >
+                    <Icon iconName="Trash" />
+                  </Button>
+                </>
+              )}
+            </div>
+          )}
         </Card.Body>
       </Card>
       {showModal && (

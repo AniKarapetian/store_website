@@ -1,6 +1,7 @@
+import { User } from "../../components/user/type";
 import store from "../store";
 import api from "../users/api";
-import { login, logout } from "./login-slice";
+import { editProfile, login, logout } from "./login-slice";
 
 const url = "http://localhost:8080/users";
 export const signIn = async (data: any) => {
@@ -20,4 +21,8 @@ export const signIn = async (data: any) => {
 export const signOut = () => {
   store.dispatch(logout());
   localStorage.removeItem("user");
+};
+export const updateProfile = async (data: User) => {
+  const res = await api.updateUser(data);
+  store.dispatch(editProfile(res));
 };

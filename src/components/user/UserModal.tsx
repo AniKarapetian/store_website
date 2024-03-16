@@ -32,7 +32,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
             <Form.Control
               type="text"
               value={user.firstName}
-              name="name"
+              name="firstName"
               onChange={handleChange}
             />
           </InputGroup>
@@ -41,7 +41,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
             <Form.Control
               type="text"
               value={user.lastName}
-              name="lastname"
+              name="lastName"
               onChange={handleChange}
             />
           </InputGroup>
@@ -68,6 +68,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
             <Form.Control
               type="string"
               value={user.role}
+              disabled
               name="role"
               onChange={handleChange}
             />

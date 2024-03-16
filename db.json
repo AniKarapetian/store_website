@@ -7,7 +7,7 @@
       "imageUrl": "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
       "email": "user@test.com",
       "password": "1234",
-      "phone": "+00000000000",
+      "phone": "+0000000007",
       "role": "user"
     },
     {
@@ -17,7 +17,15 @@
       "imageUrl": "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
       "email": "admin@test.com",
       "password": "1234",
-      "phone": "+00000000001",
+      "phone": "+00000000005",
+      "role": "admin"
+    },
+    {
+      "id": "1710599257744",
+      "email": "ani@test.com",
+      "firstName": "Ani",
+      "lastName": "Karapetyan",
+      "phone": "+49 176 31623186",
       "role": "admin"
     }
   ],
@@ -74,41 +82,70 @@
   "baskets": [
     {
       "id": "basket-1",
-      "userId": "11112",
-      "title": "T-Shirt",
-      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-      "quantity": 3,
-      "price": 5000
+      "userId": "11111",
+      "items": [
+        {
+          "id": "jghjvjkbkj",
+          "title": "T-Shirt",
+          "quantity": 1,
+          "price": 5000,
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg"
+        },
+        {
+          "id": "db0e12ad-5074-42f2-b770-e8975b97a509",
+          "title": "Red skirt",
+          "quantity": 1,
+          "price": "6000",
+          "imageUrl": "https://www.slaters-schoolwear.co.uk/wp-content/uploads/2020/06/Millbrook-38Slaters_SchoolWear-edit.jpg"
+        }
+      ]
     },
     {
-      "id": "basket-2",
-      "userId": "11112",
-      "title": "T-Shirt",
-      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-      "quantity": 1,
-      "price": 500
+      "id": "50f0",
+      "userId": "1710599257744",
+      "items": []
     }
   ],
   "orders": [
     {
-      "id": "order-1",
-      "date": "",
+      "id": "c025",
+      "userId": "11111",
+      "date": "Sat Mar 16 2024 21:34:28 GMT+0400 (Armenia Standard Time)",
       "items": [
         {
-          "id": "2222",
+          "id": "jghjvjkbkj",
           "title": "T-Shirt",
-          "description": "Woman t-shirt",
-          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-          "count": 10,
-          "price": 5000
+          "quantity": 1,
+          "price": 5000,
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg"
         },
         {
-          "id": "22722",
+          "id": "db0e12ad-5074-42f2-b770-e8975b97a509",
+          "title": "Red skirt",
+          "quantity": 1,
+          "price": "6000",
+          "imageUrl": "https://www.slaters-schoolwear.co.uk/wp-content/uploads/2020/06/Millbrook-38Slaters_SchoolWear-edit.jpg"
+        }
+      ]
+    },
+    {
+      "id": "6a3b",
+      "userId": "11111",
+      "date": "Sat Mar 16 2024 21:47:37 GMT+0400 (Armenia Standard Time)",
+      "items": [
+        {
+          "id": "jghjvjkbkj",
           "title": "T-Shirt",
-          "description": "Woman t-shirt",
-          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-          "count": 10,
-          "price": 5000
+          "quantity": 1,
+          "price": 5000,
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg"
+        },
+        {
+          "id": "db0e12ad-5074-42f2-b770-e8975b97a509",
+          "title": "Red skirt",
+          "quantity": 1,
+          "price": "6000",
+          "imageUrl": "https://www.slaters-schoolwear.co.uk/wp-content/uploads/2020/06/Millbrook-38Slaters_SchoolWear-edit.jpg"
         }
       ]
     }

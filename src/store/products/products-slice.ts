@@ -8,7 +8,7 @@ const initialState: StateType<Product> = {
   error: "",
 };
 
-export const get = createAsyncThunk("products/getProducts", async () => {
+export const getProducts = createAsyncThunk("products/getProducts", async () => {
   const response = await fetch(`${API_URL}/products`);
   if (!response.ok) {
     throw new Error("Failed to fetch products");
@@ -17,7 +17,7 @@ export const get = createAsyncThunk("products/getProducts", async () => {
   return data;
 });
 
-export const create = createAsyncThunk(
+export const createProduct = createAsyncThunk(
   "products/createProduct",
   async (newData: Product) => {
     const response = await fetch(`${API_URL}/products`, {
@@ -35,7 +35,7 @@ export const create = createAsyncThunk(
   }
 );
 
-export const update = createAsyncThunk(
+export const updateProduct = createAsyncThunk(
   "products/updateProduct",
   async (newData: Product) => {
     const response = await fetch(`${API_URL}/products/${newData.id}`, {
@@ -53,7 +53,7 @@ export const update = createAsyncThunk(
   }
 );
 
-export const remove = createAsyncThunk(
+export const removeProduct = createAsyncThunk(
   "products/removeProduct",
   async (id: string) => {
     const response = await fetch(`${API_URL}/products/${id}`, {
@@ -70,7 +70,7 @@ export const remove = createAsyncThunk(
   }
 );
 
-export const getById = createAsyncThunk(
+export const getProductById = createAsyncThunk(
   "products/getProductById",
   async (id: string) => {
     const response = await fetch(`${API_URL}/products/${id}`);
@@ -88,42 +88,42 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(get.pending, (state) => {
+      .addCase(getProducts.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(get.fulfilled, (state, action) => {
+      .addCase(getProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data = action.payload;
       })
-      .addCase(get.rejected, (state, action) => {
+      .addCase(getProducts.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch products";
       })
-      .addCase(create.fulfilled, (state, action) => {
+      .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.push(action.payload);
       })
-      .addCase(create.rejected, (state, action) => {
+      .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to add product";
       })
-      .addCase(getById.pending, (state) => {
+      .addCase(getProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getById.fulfilled, (state, action) => {
+      .addCase(getProductById.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data = action.payload;
       })
-      .addCase(getById.rejected, (state, action) => {
+      .addCase(getProductById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch product";
       })
-      .addCase(update.fulfilled, (state, action) => {
+      .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
 
@@ -132,16 +132,16 @@ const productsSlice = createSlice({
         );
         itemIndex !== -1 && (state.data[itemIndex] = action.payload);
       })
-      .addCase(update.rejected, (state, action) => {
+      .addCase(updateProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to update product";
       })
-      .addCase(remove.fulfilled, (state, action) => {
+      .addCase(removeProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data = state.data.filter((item) => item.id !== action.payload);
       })
-      .addCase(remove.rejected, (state, action) => {
+      .addCase(removeProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to remove product";
       });

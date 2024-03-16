@@ -9,8 +9,12 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
 import { productsSelector } from "../../store/products/products-selector";
 import { useDispatch } from "react-redux";
-import { create, get } from "../../store/products/products-slice";
 import { v4 as uuid } from "uuid";
+import {
+  createProduct,
+  getProducts,
+} from "../../store/products/products-slice";
+import { getBasketByUserId } from "../../store/basket/basket-slice";
 
 export const ProductsList: FC = () => {
   const dispatch = useDispatch();
@@ -27,7 +31,8 @@ export const ProductsList: FC = () => {
   });
 
   useEffect(() => {
-    dispatch(get() as any);
+    dispatch(getProducts() as any);
+    user && dispatch(getBasketByUserId(user.id) as any);
   }, [dispatch]);
 
   const handleAdd = () => {
@@ -35,7 +40,7 @@ export const ProductsList: FC = () => {
   };
 
   const handleSave = (product: Product) => {
-    dispatch(create(product) as any);
+    dispatch(createProduct(product) as any);
     handleCancel();
   };
   const handleCancel = () => {

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../../components/user/type";
 
 const loggedInUser = localStorage.getItem("user");
 const initialState: { isLoggedIn: boolean; user: any | null } = {
@@ -10,7 +11,7 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    login(state, action: PayloadAction<any>) {
+    login(state, action: PayloadAction<User>) {
       state.isLoggedIn = true;
       state.user = action.payload;
     },
@@ -18,9 +19,12 @@ const loginSlice = createSlice({
       state.isLoggedIn = false;
       state.user = null;
     },
+    editProfile(state, action: PayloadAction<User>) {
+      state.user = action.payload;
+    },
   },
 });
 
-export const { login, logout } = loginSlice.actions;
+export const { login, logout, editProfile } = loginSlice.actions;
 
 export default loginSlice.reducer;

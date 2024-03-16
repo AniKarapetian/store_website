@@ -1,63 +1,26 @@
 import React, { useState } from "react";
 import { User } from "./type";
 import { Container, Row, Col, Image, Form } from "react-bootstrap";
-import { updateUser, createUser } from "../../store/users/actions";
 import UserModal from "./UserModal";
 import { Button } from "react-bootstrap";
 import { Icon } from "../base-components/Icon";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/login/login-selector";
+import { updateProfile } from "../../store/login/actions";
 
-interface ProfileProps {
-  user: User;
-}
-
-export const UserProfile: React.FC<ProfileProps> = ({}) => {
-  const user = {
-    id: 11112,
-    firstName: "Test",
-    lastName: "User",
-    imageUrl:
-      "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
-    email: "user@test.com",
-    password: "1234",
-    phone: "+00000000000",
-    role: "user",
-  };
+export const UserProfile: React.FC = () => {
+  const user = useSelector(userSelector);
   const [showModal, setShowModal] = useState(false);
-  const [userData, setUserData] = useState<User>({
-    id: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    role: "",
-  });
+
   const handleSave = (user: User) => {
-    if (user.id) {
-      updateUser(user);
-    } else {
-      createUser(user);
-    }
-    handleCancel();
-  };
-  const handleCancel = () => {
+    updateProfile(user);
     toggleModal();
-    setUserData({
-      id: "",
-      email: "",
-      firstName: "",
-      lastName: "",
-      phone: "",
-      role: "",
-    });
   };
 
   const toggleModal = () => {
     setShowModal(!showModal);
   };
-  const handleEdit = (user: User) => {
-    setUserData({ ...user });
-    toggleModal();
-  };
+
   return (
     <div>
       <Container>
@@ -66,12 +29,7 @@ export const UserProfile: React.FC<ProfileProps> = ({}) => {
             <Image src={user.imageUrl} roundedCircle fluid />
 
             <h2>{`${user.firstName} ${user.lastName}`}</h2>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                handleEdit(userData);
-              }}
-            >
+            <Button variant="secondary" onClick={toggleModal}>
               <Icon iconName="Pencil" />
             </Button>
             <Form>
@@ -108,11 +66,11 @@ export const UserProfile: React.FC<ProfileProps> = ({}) => {
           </Col>
         </Row>
       </Container>
-      {showModal && (
+      {showModal && user && (
         <UserModal
-          data={userData}
+          data={{ ...user }}
           onSave={handleSave}
-          onCancel={handleCancel}
+          onCancel={toggleModal}
         />
       )}
     </div>

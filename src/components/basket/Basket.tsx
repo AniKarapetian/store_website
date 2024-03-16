@@ -1,40 +1,41 @@
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import BasketTable from "./BasketTable";
-import { BasketItem } from "./type";
 import { Button } from "react-bootstrap";
 import SuccessAlert from "./SuccessAlert";
+import { useDispatch } from "react-redux";
+import { getBasketByUserId } from "../../store/basket/basket-slice";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/login/login-selector";
+import { basketSelector } from "../../store/basket/basket-selector";
+import { createOrder } from "../../store/orders/orders-slice";
+import { Order } from "../order/type";
 
 const Basket: FC = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(userSelector);
+  const basket = useSelector(basketSelector);
   const [showSuccessMsg, setShowSuccessMsg] = useState(false);
-  const [basket, setBasket] = useState<BasketItem[]>([
-    {
-      id: "basket-1",
-      title: "T-Shirt",
-      imageUrl:
-        "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-      quantity: 3,
-      price: 5000,
-    },
-    {
-      id: "basket-2",
-      title: "T-Shirt",
-      imageUrl:
-        "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-      quantity: 1,
-      price: 500,
-    },
-  ]);
 
-  const createOrder = () => {
-    setBasket([]);
+  useEffect(() => {
+    dispatch(getBasketByUserId(user.id) as any);
+  }, [dispatch]);
+
+  const createNewOrder = () => {
+    const order: Order = {
+      userId: basket!.userId,
+      date: `${new Date()}`,
+      items: basket!.items,
+    };
+    dispatch(createOrder(order) as any);
     setShowSuccessMsg(true);
   };
+
   return (
     <div>
-      {!!basket.length && (
+      {!!basket && (
         <div>
-          <BasketTable basketItems={basket} />
-          <Button variant="success" onClick={createOrder}>
+          <BasketTable basketItems={basket?.items} />
+          <Button variant="success" onClick={createNewOrder}>
             Order
           </Button>
         </div>

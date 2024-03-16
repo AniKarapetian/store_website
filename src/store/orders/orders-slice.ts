@@ -8,16 +8,19 @@ const initialState: StateType<Order> = {
   error: "",
 };
 
-export const get = createAsyncThunk("orders/getOrders", async () => {
-  const response = await fetch(`${API_URL}/orders`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch orders");
+export const getOrders = createAsyncThunk(
+  "orders/getOrders",
+  async (userId: string) => {
+    const response = await fetch(`${API_URL}/orders?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch orders");
+    }
+    const data = await response.json();
+    return data;
   }
-  const data = await response.json();
-  return data;
-});
+);
 
-export const create = createAsyncThunk(
+export const createOrder = createAsyncThunk(
   "orders/createOrder",
   async (newData: Order) => {
     const response = await fetch(`${API_URL}/orders`, {
@@ -32,41 +35,6 @@ export const create = createAsyncThunk(
     }
     const order = await response.json();
     return order;
-  }
-);
-
-export const update = createAsyncThunk(
-  "orders/updateOrder",
-  async (newData: Order) => {
-    const response = await fetch(`${API_URL}/orders`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
-    });
-    if (!response.ok) {
-      throw new Error("Failed to update order");
-    }
-    const order = await response.json();
-    return order;
-  }
-);
-
-export const remove = createAsyncThunk(
-  "orders/removeOrder",
-  async (id: string) => {
-    const response = await fetch(`${API_URL}/orders/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      //check
-      throw new Error("Failed to remove order");
-    }
-    return id;
   }
 );
 
@@ -88,25 +56,25 @@ const ordersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(get.pending, (state) => {
+      .addCase(getOrders.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(get.fulfilled, (state, action) => {
+      .addCase(getOrders.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data = action.payload;
       })
-      .addCase(get.rejected, (state, action) => {
+      .addCase(getOrders.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch orders";
       })
-      .addCase(create.fulfilled, (state, action) => {
+      .addCase(createOrder.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.push(action.payload);
       })
-      .addCase(create.rejected, (state, action) => {
+      .addCase(createOrder.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to add order";
       })
@@ -122,28 +90,6 @@ const ordersSlice = createSlice({
       .addCase(getById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to fetch order";
-      })
-      .addCase(update.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-
-        const itemIndex = state.data.findIndex(
-          (item) => item.id === action.payload.id
-        );
-        itemIndex !== -1 && (state.data[itemIndex] = action.payload);
-      })
-      .addCase(update.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to update order";
-      })
-      .addCase(remove.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.data.filter((item) => item.id !== action.payload);
-      })
-      .addCase(remove.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to remove order";
       });
   },
 });

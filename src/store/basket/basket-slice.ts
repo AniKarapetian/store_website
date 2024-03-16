@@ -1,25 +1,29 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { BasketItem } from "../../components/basket/type";
+import { Basket, BasketItem } from "../../components/basket/type";
 import { StateType } from "../type";
 import { API_URL } from "../../constants";
-const initialState: StateType<BasketItem> = {
+const initialState: StateType<Basket> = {
   data: [],
+  item: null,
   loading: false,
   error: "",
 };
 
-export const get = createAsyncThunk("baskets/getBaskets", async () => {
-  const response = await fetch(`${API_URL}/baskets`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch baskets");
+export const getBasketByUserId = createAsyncThunk(
+  "baskets/getByUserId",
+  async (userId: string) => {
+    const response = await fetch(`${API_URL}/baskets?userId=${userId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch basket");
+    }
+    const data = await response.json();
+    return data ? data[0] : {};
   }
-  const data = await response.json();
-  return data;
-});
+);
 
-export const create = createAsyncThunk(
+export const createBasket = createAsyncThunk(
   "baskets/createBasket",
-  async (newData: BasketItem) => {
+  async (newData: Basket) => {
     const response = await fetch(`${API_URL}/baskets`, {
       method: "POST",
       headers: {
@@ -35,10 +39,10 @@ export const create = createAsyncThunk(
   }
 );
 
-export const update = createAsyncThunk(
+export const updateBasket = createAsyncThunk(
   "baskets/updateBasket",
-  async (newData: BasketItem) => {
-    const response = await fetch(`${API_URL}/baskets`, {
+  async (newData: Basket) => {
+    const response = await fetch(`${API_URL}/baskets/${newData.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -53,77 +57,35 @@ export const update = createAsyncThunk(
   }
 );
 
-export const remove = createAsyncThunk(
-  "baskets/removeBasket",
-  async (id: string) => {
-    const response = await fetch(`${API_URL}/baskets/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      //check
-      throw new Error("Failed to remove basket");
-    }
-    return id;
-  }
-);
-
-export const getById = createAsyncThunk(
-  "baskets/getBasketById",
-  async (id: string) => {
-    const response = await fetch(`${API_URL}/baskets/${id}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch basket");
-    }
-    const basket = await response.json();
-    return basket;
-  }
-);
-
 const basketsSlice = createSlice({
-  name: "baskets",
+  name: "basket",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(get.pending, (state) => {
+      .addCase(getBasketByUserId.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(get.fulfilled, (state, action) => {
+      .addCase(getBasketByUserId.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.data = action.payload;
+        state.item = action.payload;
       })
-      .addCase(get.rejected, (state, action) => {
+      .addCase(getBasketByUserId.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || "Failed to fetch baskets";
+        state.error = action.error.message || "Failed to fetch basket";
       })
-      .addCase(create.fulfilled, (state, action) => {
+      .addCase(createBasket.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         state.data.push(action.payload);
       })
-      .addCase(create.rejected, (state, action) => {
+      .addCase(createBasket.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to add basket";
       })
-      .addCase(getById.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.data = action.payload;
-      })
-      .addCase(getById.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to fetch basket";
-      })
-      .addCase(update.fulfilled, (state, action) => {
+      .addCase(updateBasket.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
 
@@ -132,18 +94,9 @@ const basketsSlice = createSlice({
         );
         itemIndex !== -1 && (state.data[itemIndex] = action.payload);
       })
-      .addCase(update.rejected, (state, action) => {
+      .addCase(updateBasket.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to update basket";
-      })
-      .addCase(remove.fulfilled, (state, action) => {
-        state.loading = false;
-        state.error = null;
-        state.data.filter((item) => item.id !== action.payload);
-      })
-      .addCase(remove.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message || "Failed to remove basket";
       });
   },
 });
