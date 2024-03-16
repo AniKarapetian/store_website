@@ -1,7 +1,11 @@
-import { Item } from "../product/type";
+import { Product } from "../product/type";
 
 export type Order = {
   id: string;
   date: string;
-  items: Item[];
+  items: Product[];
 };
+
+export interface OrderProps {
+  order: Order;
+}

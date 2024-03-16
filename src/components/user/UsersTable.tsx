@@ -1,8 +1,9 @@
 import React, { FC, useState } from "react";
 import { Table, Button } from "react-bootstrap";
-import { createUser, removeUser, updateUser } from "../../store/user/actions";
+import { createUser, removeUser, updateUser } from "../../store/users/actions";
 import UserModal from "./UserModal";
 import { User } from "./type";
+import { Icon } from "../base-components/Icon";
 type TableProps = {
   users: User[];
 };
@@ -88,7 +89,7 @@ const UsersTable: FC<TableProps> = ({ users }) => {
                       handleEdit(user);
                     }}
                   >
-                    Edit
+                    <Icon iconName="Pencil" />
                   </Button>
                 </td>
                 <td>
@@ -96,7 +97,7 @@ const UsersTable: FC<TableProps> = ({ users }) => {
                     onClick={() => handleDelete(user.id)}
                     variant="danger"
                   >
-                    Delete
+                    <Icon iconName="X" />
                   </Button>
                 </td>
               </tr>

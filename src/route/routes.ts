@@ -1,12 +1,23 @@
+import NotFoundPage from "../components/app/NotFoundPage";
+import Basket from "../components/basket/Basket";
 import { Home } from "../components/home/Home";
-import { OrdersList } from "../components/order/OrdersList";
+import SignIn from "../components/login/SignIn";
+import SignUp from "../components/login/SignUp";
+import Orders from "../components/order/Orders";
+import { ProductPage } from "../components/product/ProductPage";
 import { ProductsList } from "../components/product/ProductsList";
 import { UserProfile } from "../components/user/UserProfile";
 
-import { User } from "../components/user/Users";
+import Users from "../components/user/Users";
 import { RouteType } from "./types";
 
 export const routes: RouteType[] = [
+  {
+    type: "public",
+    Component: Home,
+    path: "/",
+    name: "Home",
+  },
   {
     type: "public",
     Component: Home,
@@ -14,14 +25,14 @@ export const routes: RouteType[] = [
     name: "Home",
   },
   {
-    type: "private",
+    type: "public",
     Component: ProductsList,
     path: "/products",
     name: "Products",
   },
   {
     type: "private",
-    Component: OrdersList,
+    Component: Orders,
     path: "/orders",
     name: "Orders",
   },
@@ -33,8 +44,44 @@ export const routes: RouteType[] = [
   },
   {
     type: "private",
-    Component: User,
+    Component: Users,
     path: "/users",
     name: "Users",
+  },
+  {
+    type: "private",
+    Component: ProductPage,
+    path: "/products/1",
+    name: "Product Details",
+  },
+  {
+    type: "no-auth",
+    Component: SignIn,
+    path: "/sign-in",
+    name: "Sign In",
+  },
+  {
+    type: "no-auth",
+    Component: SignUp,
+    path: "/sign-up",
+    name: "SignUp",
+  },
+  {
+    type: "private",
+    Component: Basket,
+    path: "/basket",
+    name: "Basket",
+  },
+  {
+    type: "private",
+    Component: UserProfile,
+    path: "/profile",
+    name: "Profile",
+  },
+  {
+    type: "public",
+    Component: NotFoundPage,
+    path: "/404",
+    name: "Not Found",
   },
 ];

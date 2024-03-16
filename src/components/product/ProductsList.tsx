@@ -1,64 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FC } from "react";
-import { ProductPage } from "./ProductPage";
 import { Button } from "react-bootstrap";
-// import { updateProduct, createProduct, removeProduct } from "../../store/product/actions";
 import { Product } from "./type";
 import ProductModal from "./ProductModal";
 import { ProductFilterSort } from "./ProductFilterSort";
-
-const products = [
-  {
-    id: "2222",
-    title: "T-Shirt",
-    description: "Woman t-shirt",
-    imageUrl:
-      "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-    count: 10,
-    price: 5000,
-  },
-  {
-    id: "22221",
-    title: "T-Shirt",
-    description: "Woman t-shirt",
-    imageUrl:
-      "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-    count: 10,
-    price: 5000,
-  },
-  {
-    id: "22222",
-    title: "T-Shirt",
-    description: "Woman t-shirt",
-    imageUrl:
-      "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-    count: 10,
-    price: 5000,
-  },
-  {
-    id: "22223",
-    title: "T-Shirt",
-    description: "Woman t-shirt",
-    imageUrl:
-      "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-    count: 10,
-    price: 5000,
-  },
-  {
-    id: "22224",
-    title: "T-Shirt",
-    description: "Woman t-shirt",
-    imageUrl:
-      "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
-    count: 10,
-    price: 5000,
-  },
-];
+import { ProductCard } from "./ProductCard";
+import { useSelector } from "react-redux";
+import { userSelector } from "../../store/login/login-selector";
+import { productsSelector } from "../../store/products/products-selector";
+import { useDispatch } from "react-redux";
+import { create, get } from "../../store/products/products-slice";
+import { v4 as uuid } from "uuid";
 
 export const ProductsList: FC = () => {
+  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const user = useSelector(userSelector);
+  const products = useSelector(productsSelector);
   const [product, setProduct] = useState<Product>({
-    id: "",
+    id: uuid(),
     title: "",
     description: "",
     imageUrl: "",
@@ -66,22 +26,22 @@ export const ProductsList: FC = () => {
     price: 0,
   });
 
+  useEffect(() => {
+    dispatch(get() as any);
+  }, [dispatch]);
+
   const handleAdd = () => {
     toggleModal();
   };
 
   const handleSave = (product: Product) => {
-    if (product.id) {
-      // updateProduct(product);
-    } else {
-      // createProduct(product);
-    }
+    dispatch(create(product) as any);
     handleCancel();
   };
   const handleCancel = () => {
     toggleModal();
     setProduct({
-      id: "",
+      id: uuid(),
       title: "",
       description: "",
       imageUrl: "",
@@ -93,20 +53,15 @@ export const ProductsList: FC = () => {
   const toggleModal = () => {
     setShowModal(!showModal);
   };
-  const handleDelete = (id: string) => {
-    // removeProduct(id);
-  };
 
-  const handleEdit = (product: Product) => {
-    setProduct({ ...product });
-    toggleModal();
-  };
   return (
     <div>
       <ProductFilterSort />
-      <Button onClick={handleAdd} variant="success" className="mb-2">
-        Add Product
-      </Button>
+      {user?.role === "admin" && (
+        <Button onClick={handleAdd} variant="success" className="mb-2">
+          Add Product
+        </Button>
+      )}
       <div
         style={{
           display: "flex",
@@ -115,7 +70,7 @@ export const ProductsList: FC = () => {
         }}
       >
         {products.map((product) => {
-          return <ProductPage product={product} key={product.id} />;
+          return <ProductCard product={product} key={product.id} />;
         })}
       </div>
       {showModal && (

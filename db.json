@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 11112,
+      "id": "11112",
       "firstName": "Test",
       "lastName": "User",
       "imageUrl": "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
@@ -11,7 +11,7 @@
       "role": "user"
     },
     {
-      "id": 11111,
+      "id": "11111",
       "firstName": "Admin",
       "lastName": "User",
       "imageUrl": "https://w7.pngwing.com/pngs/178/595/png-transparent-user-profile-computer-icons-login-user-avatars-thumbnail.png",
@@ -21,17 +21,96 @@
       "role": "admin"
     }
   ],
-
   "products": [
     {
-      "id": "2222",
+      "id": "22212",
       "title": "T-Shirt",
       "description": "Woman t-shirt",
       "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
       "count": 10,
       "price": 5000
+    },
+    {
+      "id": "22232",
+      "title": "T-Shirt",
+      "description": "Woman t-shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "count": 10,
+      "price": 5000
+    },
+    {
+      "id": "22242",
+      "title": "T-Shirt",
+      "description": "Woman t-shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "count": 10,
+      "price": 5000
+    },
+    {
+      "id": "22252",
+      "title": "T-Shirt",
+      "description": "Woman t-shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "count": 10,
+      "price": 5000
+    },
+    {
+      "id": "22262",
+      "title": "T-Shirt",
+      "description": "Woman t-shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "count": 10,
+      "price": 5000
+    },
+    {
+      "id": "47a4b4c8-ce93-440e-941c-9ab709adeaea",
+      "title": "Red skirt",
+      "description": "tert",
+      "imageUrl": "https://www.slaters-schoolwear.co.uk/wp-content/uploads/2020/06/Millbrook-38Slaters_SchoolWear-edit.jpg",
+      "count": "70",
+      "price": "6000"
     }
   ],
-  "baskets": [],
-  "orders": []
+  "baskets": [
+    {
+      "id": "basket-1",
+      "userId": "11112",
+      "title": "T-Shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "quantity": 3,
+      "price": 5000
+    },
+    {
+      "id": "basket-2",
+      "userId": "11112",
+      "title": "T-Shirt",
+      "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+      "quantity": 1,
+      "price": 500
+    }
+  ],
+  "orders": [
+    {
+      "id": "order-1",
+      "date": "",
+      "items": [
+        {
+          "id": "2222",
+          "title": "T-Shirt",
+          "description": "Woman t-shirt",
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+          "count": 10,
+          "price": 5000
+        },
+        {
+          "id": "22722",
+          "title": "T-Shirt",
+          "description": "Woman t-shirt",
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg",
+          "count": 10,
+          "price": 5000
+        }
+      ]
+    }
+  ]
 }

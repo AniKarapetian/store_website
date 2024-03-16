@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { User } from "./type";
 import { Container, Row, Col, Image, Form } from "react-bootstrap";
-import { updateUser, createUser } from "../../store/user/actions";
+import { updateUser, createUser } from "../../store/users/actions";
 import UserModal from "./UserModal";
 import { Button } from "react-bootstrap";
+import { Icon } from "../base-components/Icon";
 
 interface ProfileProps {
   user: User;
@@ -63,7 +64,16 @@ export const UserProfile: React.FC<ProfileProps> = ({}) => {
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <Image src={user.imageUrl} roundedCircle fluid />
+
             <h2>{`${user.firstName} ${user.lastName}`}</h2>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                handleEdit(userData);
+              }}
+            >
+              <Icon iconName="Pencil" />
+            </Button>
             <Form>
               <Form.Group controlId="formEmail">
                 <Form.Label>Email address</Form.Label>
@@ -95,14 +105,6 @@ export const UserProfile: React.FC<ProfileProps> = ({}) => {
                 />
               </Form.Group>
             </Form>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                handleEdit(userData);
-              }}
-            >
-              Edit
-            </Button>
           </Col>
         </Row>
       </Container>

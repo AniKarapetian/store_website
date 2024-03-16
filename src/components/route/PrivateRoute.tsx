@@ -1,7 +1,7 @@
 // PrivateRoute.tsx
 
 import React, { ComponentType, FC } from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Route, redirect, RouteProps } from "react-router-dom";
 
 interface PrivateRouteProps extends RouteProps {
   component: ComponentType<FC>;

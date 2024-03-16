@@ -10,3 +10,9 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   unknown,
   Action<string>
 >;
+
+export type StateType<T> = {
+  loading: boolean;
+  error: string | null;
+  data: T[];
+};

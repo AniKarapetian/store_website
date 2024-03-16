@@ -1,12 +1,12 @@
-import React, { ChangeEvent, FC, useEffect, useState } from "react";
+import React, { FC, useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { usersSelector } from "../../store/user/user-selector";
+import { usersSelector } from "../../store/users/users-selector";
 
-import { fetchUsers } from "../../store/user/actions";
+import { fetchUsers } from "../../store/users/actions";
 import UsersTable from "./UsersTable";
 
-export const User: FC = () => {
+const Users: FC = () => {
   const users = useSelector(usersSelector);
 
   useEffect(() => {
@@ -20,3 +20,4 @@ export const User: FC = () => {
     </div>
   );
 };
+export default Users;

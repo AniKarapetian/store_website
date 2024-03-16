@@ -1,5 +1,5 @@
 import store from "../store";
-import api from "../user/api";
+import api from "../users/api";
 import { login, logout } from "./login-slice";
 
 const url = "http://localhost:8080/users";

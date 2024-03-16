@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Button } from "react-bootstrap";
 // import { GENRE_TYPES } from "../../common/constants";
 import { useDispatch } from "react-redux";
+import { Icon } from "../base-components/Icon";
 // import {
 //   filterMovies,
 //   sortMoviesByRatingAsc,
@@ -13,6 +14,7 @@ import { useDispatch } from "react-redux";
 export const ProductFilterSort: React.FC = () => {
   const [selectedGenre, setSelectedGenre] = useState<string>("");
   const [sortBy, setSortBy] = useState<string>("");
+  const [searchItem, setSearchItem] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,14 +38,25 @@ export const ProductFilterSort: React.FC = () => {
     //   dispatch(sortMoviesByRatingDesc());
     // }
   };
-
+  const handleSearchChange = () => {};
   return (
     <Form>
       <Row className="mb-3">
+        <Form.Group as={Col} controlId="search">
+          <Form.Label>Search</Form.Label>
+          <Form.Control
+            onChange={handleSearchChange}
+            value={searchItem}
+          ></Form.Control>
+          <Button>
+            <Icon iconName="Search"></Icon>
+          </Button>
+        </Form.Group>
+
         <Form.Group as={Col} controlId="formGenre">
-          <Form.Label>Filter by Genre:</Form.Label>
+          <Form.Label>Filter by</Form.Label>
           <Form.Select onChange={handleGenreChange} value={selectedGenre}>
-            <option value="">All Genres</option>
+            <option value="">All</option>
             {/* {GENRE_TYPES.map((genre, index) => (
               <option key={index} value={genre}>
                 {genre}
@@ -52,7 +65,7 @@ export const ProductFilterSort: React.FC = () => {
           </Form.Select>
         </Form.Group>
         <Form.Group as={Col} controlId="formSort">
-          <Form.Label>Sort by:</Form.Label>
+          <Form.Label>Sort by</Form.Label>
           <Form.Select onChange={handleSortChange} value={sortBy}>
             <option value="">None</option>
             <option value="year-asc">Year (Ascending)</option>

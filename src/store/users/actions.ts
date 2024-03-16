@@ -1,5 +1,5 @@
 import api from "./api";
-import { addUser, deleteUser, editUser, getUsers } from "./user-slice";
+import { addUser, deleteUser, editUser, getUsers } from "./users-slice";
 import store from "../store";
 
 export const fetchUsers = async () => {

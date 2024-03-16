@@ -16,7 +16,7 @@ const ProductModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
       className="modal show"
       style={{ display: "block", position: "initial" }}
     >
-      <Modal show onHide={onCancel}>
+      <Modal show onHide={onCancel} size="lg">
         <Modal.Header>
           <Modal.Title>Product</Modal.Title>
         </Modal.Header>
