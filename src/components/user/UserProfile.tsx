@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import { Icon } from "../base-components/Icon";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
-import { updateProfile } from "../../store/login/actions";
+import { updateProfile } from "../../actions/login-actions";
 
 export const UserProfile: React.FC = () => {
   const user = useSelector(userSelector);

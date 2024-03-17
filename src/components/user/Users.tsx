@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from "react";
 
 import { useSelector } from "react-redux";
-import { usersSelector } from "../../store/users/users-selector";
+import { usersSelector } from "../../actions/users/users-selector";
 
-import { fetchUsers } from "../../store/users/actions";
+import { fetchUsers } from "../../actions/user-actions";
 import UsersTable from "./UsersTable";
 
 const Users: FC = () => {

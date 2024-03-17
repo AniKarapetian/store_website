@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { Table, Button } from "react-bootstrap";
-import { createUser, removeUser, updateUser } from "../../store/users/actions";
+import { createUser, removeUser, updateUser } from "../../actions/user-actions";
 import UserModal from "./UserModal";
 import { User } from "./type";
 import { Icon } from "../base-components/Icon";

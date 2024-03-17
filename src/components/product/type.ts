@@ -1,3 +1,5 @@
+import { Basket } from "../basket/type";
+
 export type Product = {
   id: string;
   title: string;
@@ -9,6 +11,7 @@ export type Product = {
 
 export interface IProductPageProps {
   product: Product;
+  basket: Basket;
 }
 
 export interface ModalProps {

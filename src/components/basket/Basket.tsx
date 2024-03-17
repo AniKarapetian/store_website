@@ -1,23 +1,23 @@
 import React, { FC, useEffect, useState } from "react";
 import BasketTable from "./BasketTable";
 import { Button } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { getBasketByUserId } from "../../store/basket/basket-slice";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
-import { basketSelector } from "../../store/basket/basket-selector";
-import { createOrder } from "../../store/orders/orders-slice";
+import { createOrder } from "../../actions/orders-actions";
 import { Order } from "../order/type";
-import { AppDispatch } from "../../store/type";
+import { getBasketByUserId } from "../../actions/basket-actions";
+import { Basket as BasketType } from "./type";
 
 const Basket: FC<any> = ({ showAlert }) => {
-  const dispatch: AppDispatch = useDispatch();
+  const [basket, setBasket] = useState<BasketType>();
   const user = useSelector(userSelector);
-  const basket = useSelector(basketSelector);
+  const getBasket = async () => {
+    user && setBasket(await getBasketByUserId(user.id));
+  };
 
   useEffect(() => {
-    user && dispatch(getBasketByUserId(user.id));
-  }, [dispatch]);
+    getBasket();
+  }, []);
 
   const createNewOrder = () => {
     const order: Order = {
@@ -25,7 +25,7 @@ const Basket: FC<any> = ({ showAlert }) => {
       date: `${new Date()}`,
       items: basket!.items,
     };
-    dispatch(createOrder(order));
+    createOrder(order);
     showAlert("success", "Your order successfully done!");
   };
 

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "../../store/login/actions";
+import { signOut } from "../../actions/login-actions";
 import { useSelector } from "react-redux";
 import { loginSelector, userSelector } from "../../store/login/login-selector";
 

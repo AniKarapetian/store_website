@@ -1,11 +1,10 @@
-import { User } from "../../components/user/type";
-import store from "../store";
-import api from "../users/api";
-import { editProfile, login, logout } from "./login-slice";
+import { User } from "../components/user/type";
+import store from "../store/store";
+import api from "./api";
+import { editProfile, login, logout } from "../store/login/login-slice";
 
-const url = "http://localhost:8080/users";
 export const signIn = async (data: Partial<User>) => {
-  const users = await api.fetchUsers();
+  const users = await api.user.fetchUsers();
 
   const account = users.find(
     (user: User) => user.email === data.email && user.password === data.password
@@ -23,6 +22,6 @@ export const signOut = () => {
   localStorage.removeItem("user");
 };
 export const updateProfile = async (data: User) => {
-  const res = await api.updateUser(data);
+  const res = await api.user.updateUser(data);
   store.dispatch(editProfile(res));
 };

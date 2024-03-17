@@ -1,18 +1,14 @@
-import React, { FC, useState } from "react";
-import { Table, Button } from "react-bootstrap";
+import React, { FC } from "react";
+import { Table } from "react-bootstrap";
 import { BasketItem } from "./type";
 import { Icon } from "../base-components/Icon";
-import { useDispatch } from "react-redux";
-import { updateBasket } from "../../store/basket/basket-slice";
 import classes from "../base-components/styles.module.css";
-import { AppDispatch } from "../../store/type";
 
 type TableProps = {
   basketItems: BasketItem[];
 };
 
 const BasketTable: FC<TableProps> = ({ basketItems }) => {
-  const dispatch: AppDispatch = useDispatch();
   const removeItem = (id: string) => {
     // dispatch(updateBasket({}) );
   };

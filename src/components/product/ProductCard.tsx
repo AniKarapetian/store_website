@@ -7,20 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
 import ProductModal from "./ProductModal";
-import {
-  removeProduct,
-  updateProduct,
-} from "../../store/products/products-slice";
-import { updateBasket } from "../../store/basket/basket-slice";
-import { basketSelector } from "../../store/basket/basket-selector";
+import { removeProduct, updateProduct } from "../../actions/products-actions";
 import { BasketItem } from "../basket/type";
 import { v4 as uuid } from "uuid";
-import { AppDispatch } from "../../store/type";
-export const ProductCard: FC<IProductPageProps> = ({ product }) => {
+import { updateBasket } from "../../actions/basket-actions";
+export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
   const navigate = useNavigate();
   const user = useSelector(userSelector);
-  const basket = useSelector(basketSelector);
-  const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [productData, setProduct] = useState<Product>({
     id: "",
@@ -30,8 +23,8 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
     count: 0,
     price: 0,
   });
-  const handleDelete = (id: string) => {
-    dispatch(removeProduct(id));
+  const handleDelete = async (id: string) => {
+    await removeProduct(id);
   };
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -50,20 +43,19 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
       imageUrl: product.imageUrl,
     };
 
-    dispatch(
+    basket &&
       updateBasket({
         id: basket?.id,
         userId: basket!.userId,
         items: [...basket!.items, basketItem],
-      })
-    );
+      });
   };
   const openDetails = () => {
     navigate("/products/1");
   };
 
-  const handleSave = (product: Product) => {
-    dispatch(updateProduct(product));
+  const handleSave = async (product: Product) => {
+    await updateProduct(product);
     handleCancel();
   };
   const handleCancel = () => {

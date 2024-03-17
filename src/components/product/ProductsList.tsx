@@ -7,20 +7,27 @@ import { ProductFilterSort } from "./ProductFilterSort";
 import { ProductCard } from "./ProductCard";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
-import { productsSelector } from "../../store/products/products-selector";
-import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
-import {
-  createProduct,
-  getProducts,
-} from "../../store/products/products-slice";
-import { getBasketByUserId } from "../../store/basket/basket-slice";
+import { createProduct, getProducts } from "../../actions/products-actions";
+import { Basket } from "../basket/type";
+import { getBasketByUserId } from "../../actions/basket-actions";
 
 export const ProductsList: FC = () => {
-  const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [basket, setBasket] = useState<Basket>();
   const user = useSelector(userSelector);
-  const products = useSelector(productsSelector);
+
+  const getData = async () => {
+    if (user) {
+      setProducts(await getProducts());
+      setBasket(await getBasketByUserId(user.id));
+    }
+  };
+  useEffect(() => {
+    getData();
+  }, []);
+
   const [product, setProduct] = useState<Product>({
     id: uuid(),
     title: "",
@@ -30,17 +37,12 @@ export const ProductsList: FC = () => {
     price: 0,
   });
 
-  useEffect(() => {
-    dispatch(getProducts());
-    user && dispatch(getBasketByUserId(user.id));
-  }, [dispatch]);
-
   const handleAdd = () => {
     toggleModal();
   };
 
   const handleSave = (product: Product) => {
-    dispatch(createProduct(product));
+    createProduct(product);
     handleCancel();
   };
   const handleCancel = () => {
@@ -75,7 +77,9 @@ export const ProductsList: FC = () => {
         }}
       >
         {products.map((product) => {
-          return <ProductCard product={product} key={product.id} />;
+          return (
+            <ProductCard product={product} key={product.id} basket={basket!} />
+          );
         })}
       </div>
       {showModal && (
