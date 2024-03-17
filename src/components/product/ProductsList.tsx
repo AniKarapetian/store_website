@@ -31,8 +31,8 @@ export const ProductsList: FC = () => {
   });
 
   useEffect(() => {
-    dispatch(getProducts() as any);
-    user && dispatch(getBasketByUserId(user.id) as any);
+    dispatch(getProducts());
+    user && dispatch(getBasketByUserId(user.id));
   }, [dispatch]);
 
   const handleAdd = () => {
@@ -40,7 +40,7 @@ export const ProductsList: FC = () => {
   };
 
   const handleSave = (product: Product) => {
-    dispatch(createProduct(product) as any);
+    dispatch(createProduct(product));
     handleCancel();
   };
   const handleCancel = () => {

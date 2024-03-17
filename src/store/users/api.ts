@@ -1,16 +1,17 @@
-const url = "http://localhost:8080/users";
+import { User } from "../../components/user/type";
+import { API_URL } from "../../constants";
 
 export default {
   fetchUsers: async () => {
-    const response = await fetch(url);
+    const response = await fetch(API_URL);
     if (!response.ok) {
       throw new Error("Failed to fetch users");
     }
     return response.json();
   },
 
-  createUser: async (data: any) => {
-    return fetch(url, {
+  createUser: async (data: User) => {
+    return fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +34,7 @@ export default {
   },
 
   removeUser: async (id: string) => {
-    return fetch(`${url}/${id}`, {
+    return fetch(`${API_URL}/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -44,9 +45,9 @@ export default {
     });
   },
 
-  updateUser: async (data: any) => {
+  updateUser: async (data: User) => {
     {
-      return fetch(`${url}/${data.id}`, {
+      return fetch(`${API_URL}/${data.id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

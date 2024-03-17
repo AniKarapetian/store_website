@@ -15,7 +15,7 @@ const MenuNavbar: FC = () => {
     navigate("/sign-in");
   };
   return (
-    <Navbar bg="secondary" data-bs-theme="dark">
+    <Navbar bg="secondary" data-bs-theme="dark" fixed="top">
       <Container>
         <Nav className="me-auto">
           <Nav.Link href="/home">Home</Nav.Link>

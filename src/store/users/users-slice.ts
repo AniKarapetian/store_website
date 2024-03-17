@@ -6,10 +6,10 @@ const userSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    addUser(state, action: PayloadAction<any>) {
+    addUser(state, action: PayloadAction<User>) {
       state.push(action.payload);
     },
-    editUser(state, action: PayloadAction<any>) {
+    editUser(state, action: PayloadAction<User>) {
       const userIndex = state.findIndex(
         (user) => user.id === action.payload.id
       );
@@ -23,7 +23,7 @@ const userSlice = createSlice({
       state.splice(userIndex, 1);
     },
 
-    getUsers(_, action: PayloadAction<any[]>) {
+    getUsers(_, action: PayloadAction<User[]>) {
       return action.payload;
     },
   },

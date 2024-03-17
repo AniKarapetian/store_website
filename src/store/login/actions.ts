@@ -4,11 +4,11 @@ import api from "../users/api";
 import { editProfile, login, logout } from "./login-slice";
 
 const url = "http://localhost:8080/users";
-export const signIn = async (data: any) => {
+export const signIn = async (data: Partial<User>) => {
   const users = await api.fetchUsers();
 
   const account = users.find(
-    (user: any) => user.email === data.email && user.password === data.password
+    (user: User) => user.email === data.email && user.password === data.password
   );
   if (account) {
     store.dispatch(login(account));

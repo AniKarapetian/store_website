@@ -3,7 +3,10 @@ import { Carousel, Image } from "react-bootstrap";
 
 const ImgSlider: FC = () => {
   return (
-    <Carousel controls={false}>
+    <Carousel
+      controls={false}
+      style={{ margin: "auto", marginTop: "50px", width: "50%" }}
+    >
       <Carousel.Item>
         <Image
           src="https://tree-stores.com/wp-content/uploads/2023/10/cover-slider-3.jpg"

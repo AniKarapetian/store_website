@@ -1,15 +1,15 @@
 import React, { ChangeEvent, useState } from "react";
-// import { SignUpData } from "../../types/types";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../store/login/actions";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 
 import { Button, Container } from "react-bootstrap";
+import { User } from "../user/type";
 
 const SignUp: React.FC = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState<any>({
+  const [data, setData] = useState<Partial<User>>({
     email: "",
     password: "",
   });

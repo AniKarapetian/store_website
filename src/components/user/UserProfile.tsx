@@ -26,7 +26,7 @@ export const UserProfile: React.FC = () => {
       <Container>
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
-            <Image src={user.imageUrl} roundedCircle fluid />
+            <Image src={user.imageUrl} roundedCircle height={100} />
 
             <h2>{`${user.firstName} ${user.lastName}`}</h2>
             <Button variant="secondary" onClick={toggleModal}>

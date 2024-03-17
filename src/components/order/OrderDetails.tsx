@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { Product } from "../product/type";
 import { OrderItem } from "./OrderItem";
 import { OrderProps } from "./type";
 import { BasketItem } from "../basket/type";
 
 const OrderDetails: React.FC<OrderProps> = ({ order }) => {
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    if (order) {
+      const totalCost = order.items.reduce((total, item) => {
+        return total + item.price * item.quantity;
+      }, 0);
+      setTotalPrice(totalCost);
+    }
+  }, [order]);
+
   return (
     <Container
       style={{
@@ -27,6 +37,11 @@ const OrderDetails: React.FC<OrderProps> = ({ order }) => {
             <OrderItem item={item} />
           </Col>
         ))}
+      </Row>
+      <Row>
+        <p className="m-2">
+          <b>Total price: {totalPrice} AMD</b>
+        </p>
       </Row>
     </Container>
   );

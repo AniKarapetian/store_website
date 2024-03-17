@@ -15,11 +15,12 @@ import { updateBasket } from "../../store/basket/basket-slice";
 import { basketSelector } from "../../store/basket/basket-selector";
 import { BasketItem } from "../basket/type";
 import { v4 as uuid } from "uuid";
+import { AppDispatch } from "../../store/type";
 export const ProductCard: FC<IProductPageProps> = ({ product }) => {
   const navigate = useNavigate();
   const user = useSelector(userSelector);
   const basket = useSelector(basketSelector);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
   const [productData, setProduct] = useState<Product>({
     id: "",
@@ -30,7 +31,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
     price: 0,
   });
   const handleDelete = (id: string) => {
-    dispatch(removeProduct(id) as any);
+    dispatch(removeProduct(id));
   };
   const toggleModal = () => {
     setShowModal(!showModal);
@@ -54,7 +55,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
         id: basket?.id,
         userId: basket!.userId,
         items: [...basket!.items, basketItem],
-      }) as any
+      })
     );
   };
   const openDetails = () => {
@@ -62,7 +63,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product }) => {
   };
 
   const handleSave = (product: Product) => {
-    dispatch(updateProduct(product) as any);
+    dispatch(updateProduct(product));
     handleCancel();
   };
   const handleCancel = () => {

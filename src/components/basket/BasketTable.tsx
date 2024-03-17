@@ -4,15 +4,17 @@ import { BasketItem } from "./type";
 import { Icon } from "../base-components/Icon";
 import { useDispatch } from "react-redux";
 import { updateBasket } from "../../store/basket/basket-slice";
+import classes from "../base-components/styles.module.css";
+import { AppDispatch } from "../../store/type";
 
 type TableProps = {
   basketItems: BasketItem[];
 };
 
 const BasketTable: FC<TableProps> = ({ basketItems }) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const removeItem = (id: string) => {
-    dispatch(updateBasket({}) as any);
+    // dispatch(updateBasket({}) );
   };
 
   const updateItemCount = (step: number) => {};
@@ -40,9 +42,9 @@ const BasketTable: FC<TableProps> = ({ basketItems }) => {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>
-                  <Icon iconName="DashCircle" />
+                  <Icon iconName="DashCircle" className={classes.icon} />
                   {item.quantity}
-                  <Icon iconName="PlusCircle" />
+                  <Icon iconName="PlusCircle" className={classes.icon} />
                 </td>
                 <td>{item.quantity * item.price}</td>
                 <td>
@@ -50,6 +52,7 @@ const BasketTable: FC<TableProps> = ({ basketItems }) => {
                     iconName="XCircle"
                     onClick={() => removeItem(item.id!)}
                     color="red"
+                    className={classes.icon}
                   />
                 </td>
               </tr>

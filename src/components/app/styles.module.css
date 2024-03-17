@@ -1,0 +1,6 @@
+.appContainer {
+  height: 100%;
+  overflow: auto;
+  margin-top: 70px;
+  margin-bottom: 80px;
+}

@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
-// import { GENRE_TYPES } from "../../common/constants";
+import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { Icon } from "../base-components/Icon";
-// import {
-//   filterMovies,
-//   sortMoviesByRatingAsc,
-//   sortMoviesByRatingDesc,
-//   sortMoviesByYearAsc,
-//   sortMoviesByYearDesc,
-// } from "../../store/movies/movies-slice";
 
 export const ProductFilterSort: React.FC = () => {
   const [selectedGenre, setSelectedGenre] = useState<string>("");
@@ -23,6 +14,11 @@ export const ProductFilterSort: React.FC = () => {
 
   const handleGenreChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedGenre(event.target.value);
+  };
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      console.log("search");
+    }
   };
 
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -47,10 +43,8 @@ export const ProductFilterSort: React.FC = () => {
           <Form.Control
             onChange={handleSearchChange}
             value={searchItem}
+            onKeyDown={handleEnter}
           ></Form.Control>
-          <Button>
-            <Icon iconName="Search"></Icon>
-          </Button>
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGenre">

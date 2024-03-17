@@ -68,7 +68,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
             <Form.Control
               type="string"
               value={user.role}
-              disabled
+              disabled={!!user.id}
               name="role"
               onChange={handleChange}
             />

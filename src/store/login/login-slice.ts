@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "../../components/user/type";
 
 const loggedInUser = localStorage.getItem("user");
-const initialState: { isLoggedIn: boolean; user: any | null } = {
+const initialState: { isLoggedIn: boolean; user: User | null } = {
   isLoggedIn: !!loggedInUser,
   user: loggedInUser ? JSON.parse(loggedInUser) : null,
 };
