@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import { routes } from "../../route/routes";
 import MenuNavbar from "../navbar/Navbar";
 import { Container } from "react-bootstrap";
@@ -26,7 +26,7 @@ const App: FC = () => {
     }, 2000);
   };
   return (
-    <BrowserRouter>
+    <Router>
       <MenuNavbar />
       <Container fluid className={classes.appContainer}>
         <Routes>
@@ -68,7 +68,7 @@ const App: FC = () => {
         <AlertComponent type={showAlert.type} message={showAlert.message} />
       )}
       <Footer />
-    </BrowserRouter>
+    </Router>
   );
 };
 

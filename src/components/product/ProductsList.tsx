@@ -34,7 +34,7 @@ export const ProductsList: FC<any> = ({ showAlert }) => {
   }, []);
 
   const [product, setProduct] = useState<Product>({
-    id: uuid(),
+    id: "",
     title: "",
     description: "",
     imageUrl: "",
@@ -59,6 +59,7 @@ export const ProductsList: FC<any> = ({ showAlert }) => {
       products[index] = updatedProduct;
       setProducts([...products]);
     } else {
+      product.id = uuid();
       const newProduct = await createProduct(product);
       setProducts([...products, newProduct]);
       showAlert("success", "Product successfully added!");
@@ -68,7 +69,7 @@ export const ProductsList: FC<any> = ({ showAlert }) => {
   const handleCancel = () => {
     toggleModal();
     setProduct({
-      id: uuid(),
+      id: "",
       title: "",
       description: "",
       imageUrl: "",

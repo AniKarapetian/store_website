@@ -38,6 +38,7 @@ const SignUp: React.FC<any> = ({ showAlert }) => {
       password: "",
     });
     setRepeatPassword("");
+
     await signUp(data);
     showAlert("success", "You successfully registered!");
     setError("");

@@ -2,7 +2,7 @@
   "users": [
     {
       "id": "1710751651332",
-      "role": "user",
+      "role": "admin",
       "firstName": "Admin",
       "lastName": "User",
       "phone": "+44 20 3086 8046",
@@ -66,6 +66,22 @@
       "imageUrl": "https://www.slaters-schoolwear.co.uk/wp-content/uploads/2020/06/Millbrook-38Slaters_SchoolWear-edit.jpg",
       "count": "70",
       "price": "6000"
+    },
+    {
+      "id": "c-9ab709adeaea",
+      "title": "Trench Coat ",
+      "description": "Woman Trench Coat ",
+      "imageUrl": "https://coach.scene7.com/is/image/Coach/cg967_kha_a0?$mobileProductV3$",
+      "count": "20",
+      "price": "15000"
+    },
+    {
+      "id": "cccbf595-2921-4d8c-9a2b-4770a5b88b61",
+      "title": "Coat",
+      "description": "Short trench coat",
+      "imageUrl": "https://img1.cohimg.net/is/image/Coach/f34022_qtz_a0?fmt=jpeg&wid=800&qlt=75,1&op_sharpen=0&resMode=bicub&op_usm=5,0.2,0,0&iccEmbed=0",
+      "count": "40",
+      "price": "12000"
     }
   ],
   "baskets": [
@@ -78,6 +94,13 @@
           "title": "T-Shirt",
           "quantity": 1,
           "price": 3400,
+          "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg"
+        },
+        {
+          "id": "3b834005-b27f-4112-8b57-10c8ce62991a",
+          "title": "T-Shirt",
+          "quantity": 1,
+          "price": 200,
           "imageUrl": "https://img.sonofatailor.com/images/customizer/product/White_O_Crew_Regular_NoPocket.jpg"
         }
       ]
