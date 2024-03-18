@@ -81,7 +81,7 @@ export const routes: RouteType[] = [
   {
     type: "public",
     Component: NotFoundPage,
-    path: "/404",
+    path: "*",
     name: "Not Found",
   },
 ];

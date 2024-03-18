@@ -2,6 +2,8 @@ import { User } from "../components/user/type";
 import store from "../store/store";
 import api from "./api";
 import { editProfile, login, logout } from "../store/login/login-slice";
+import { Basket } from "../components/basket/type";
+import { createBasket } from "./basket-actions";
 
 export const signIn = async (data: Partial<User>) => {
   const users = await api.user.fetchUsers();
@@ -18,7 +20,12 @@ export const signIn = async (data: Partial<User>) => {
 };
 
 export const signUp = async (data: User) => {
-  await api.user.createUser(data);
+  const user = await api.user.createUser(data);
+  const basket: Basket = {
+    userId: user.id,
+    items: [],
+  };
+  await createBasket(basket);
 };
 
 export const signOut = () => {

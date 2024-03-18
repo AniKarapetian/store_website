@@ -45,7 +45,9 @@ const Users: FC<any> = ({ showAlert }) => {
   return (
     <div>
       <h2>Users</h2>
-      <UsersTable users={users} actions={{ save, remove }} />
+      {user && user.role === "admin" && (
+        <UsersTable users={users} actions={{ save, remove }} />
+      )}
     </div>
   );
 };
