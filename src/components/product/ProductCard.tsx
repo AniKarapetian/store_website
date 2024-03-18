@@ -3,16 +3,20 @@ import { FC } from "react";
 import { IProductPageProps, Product } from "./type";
 import { Card, Button } from "react-bootstrap";
 import { Icon } from "../base-components/Icon";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
 import ProductModal from "./ProductModal";
-import { removeProduct, updateProduct } from "../../actions/products-actions";
 import { BasketItem } from "../basket/type";
 import { v4 as uuid } from "uuid";
 import { updateBasket } from "../../actions/basket-actions";
-export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
-  const navigate = useNavigate();
+import { Link } from "react-router-dom";
+export const ProductCard: FC<IProductPageProps> = ({
+  product,
+  basket,
+  showAlert,
+  handleSave,
+  handleDelete,
+}) => {
   const user = useSelector(userSelector);
   const [showModal, setShowModal] = useState(false);
   const [productData, setProduct] = useState<Product>({
@@ -23,9 +27,6 @@ export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
     count: 0,
     price: 0,
   });
-  const handleDelete = async (id: string) => {
-    await removeProduct(id);
-  };
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -49,14 +50,12 @@ export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
         userId: basket!.userId,
         items: [...basket!.items, basketItem],
       });
-  };
-  const openDetails = () => {
-    navigate("/products/1");
+    showAlert("success", "Product added to basket!");
   };
 
-  const handleSave = async (product: Product) => {
-    await updateProduct(product);
-    handleCancel();
+  const onSave = async (product: Product) => {
+    handleSave(product);
+    toggleModal();
   };
   const handleCancel = () => {
     toggleModal();
@@ -74,7 +73,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
       <Card style={{ width: "17rem" }}>
         <Card.Img variant="top" src={product.imageUrl} height={250} />
         <Card.Body>
-          <Card.Link onClick={openDetails}>{product.title}</Card.Link>
+          <Link to={`/products/${product.id}`}>{product.title}</Link>
 
           <Card.Text>{product.price} AMD</Card.Text>
           {user && (
@@ -112,7 +111,7 @@ export const ProductCard: FC<IProductPageProps> = ({ product, basket }) => {
       {showModal && (
         <ProductModal
           data={productData}
-          onSave={handleSave}
+          onSave={onSave}
           onCancel={handleCancel}
         />
       )}

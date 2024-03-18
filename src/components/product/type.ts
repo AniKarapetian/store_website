@@ -1,3 +1,4 @@
+import { AlertType } from "../base-components/types";
 import { Basket } from "../basket/type";
 
 export type Product = {
@@ -12,6 +13,9 @@ export type Product = {
 export interface IProductPageProps {
   product: Product;
   basket: Basket;
+  showAlert: (type: AlertType, message: string) => void;
+  handleDelete: (id: string) => void;
+  handleSave: (product: Product) => void;
 }
 
 export interface ModalProps {

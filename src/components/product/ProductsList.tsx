@@ -8,19 +8,24 @@ import { ProductCard } from "./ProductCard";
 import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
 import { v4 as uuid } from "uuid";
-import { createProduct, getProducts } from "../../actions/products-actions";
+import {
+  createProduct,
+  getProducts,
+  removeProduct,
+  updateProduct,
+} from "../../actions/products-actions";
 import { Basket } from "../basket/type";
 import { getBasketByUserId } from "../../actions/basket-actions";
 
-export const ProductsList: FC = () => {
+export const ProductsList: FC<any> = ({ showAlert }) => {
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
   const [basket, setBasket] = useState<Basket>();
   const user = useSelector(userSelector);
 
   const getData = async () => {
+    setProducts(await getProducts());
     if (user) {
-      setProducts(await getProducts());
       setBasket(await getBasketByUserId(user.id));
     }
   };
@@ -40,10 +45,25 @@ export const ProductsList: FC = () => {
   const handleAdd = () => {
     toggleModal();
   };
+  const handleDelete = async (id: string) => {
+    await removeProduct(id);
+    setProducts(products.filter((product) => product.id !== id));
+    showAlert("success", "Product removed!");
+  };
 
-  const handleSave = (product: Product) => {
-    createProduct(product);
-    handleCancel();
+  const handleSave = async (product: Product) => {
+    if (product.id) {
+      const updatedProduct = await updateProduct(product);
+      showAlert("success", "Product updated!");
+      const index = products.findIndex((el) => el.id === product.id);
+      products[index] = updatedProduct;
+      setProducts([...products]);
+    } else {
+      const newProduct = await createProduct(product);
+      setProducts([...products, newProduct]);
+      showAlert("success", "Product successfully added!");
+      handleCancel();
+    }
   };
   const handleCancel = () => {
     toggleModal();
@@ -61,9 +81,27 @@ export const ProductsList: FC = () => {
     setShowModal(!showModal);
   };
 
+  const handleSearch = async (searchItem: string) => {
+    setProducts(await getProducts(searchItem));
+  };
+
+  const handleSort = (sortBy: string) => {
+    const sortedProducts = [...products];
+    if (sortBy === "a-z") {
+      sortedProducts.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortBy === "z-a") {
+      sortedProducts.sort((a, b) => b.title.localeCompare(a.title));
+    } else if (sortBy === "price-asc") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    } else if (sortBy === "price-desc") {
+      sortedProducts.sort((a, b) => b.price - a.price);
+    }
+    setProducts(sortedProducts);
+  };
+
   return (
     <div>
-      <ProductFilterSort />
+      <ProductFilterSort handleSearch={handleSearch} handleSort={handleSort} />
       {user?.role === "admin" && (
         <Button onClick={handleAdd} variant="success" className="mb-2">
           Add Product
@@ -78,7 +116,14 @@ export const ProductsList: FC = () => {
       >
         {products.map((product) => {
           return (
-            <ProductCard product={product} key={product.id} basket={basket!} />
+            <ProductCard
+              product={product}
+              key={product.id}
+              basket={basket!}
+              showAlert={showAlert}
+              handleSave={handleSave}
+              handleDelete={handleDelete}
+            />
           );
         })}
       </div>

@@ -6,15 +6,13 @@ import classes from "../base-components/styles.module.css";
 
 type TableProps = {
   basketItems: BasketItem[];
+  actions: {
+    removeItem: (id: string) => void;
+    updateItemCount: (step: number, id: string) => void;
+  };
 };
 
-const BasketTable: FC<TableProps> = ({ basketItems }) => {
-  const removeItem = (id: string) => {
-    // dispatch(updateBasket({}) );
-  };
-
-  const updateItemCount = (step: number) => {};
-
+const BasketTable: FC<TableProps> = ({ basketItems, actions }) => {
   return (
     <div>
       <Table striped bordered hover>
@@ -38,15 +36,27 @@ const BasketTable: FC<TableProps> = ({ basketItems }) => {
                 <td>{item.title}</td>
                 <td>{item.price}</td>
                 <td>
-                  <Icon iconName="DashCircle" className={classes.icon} />
+                  <Icon
+                    iconName="DashCircle"
+                    className={classes.icon}
+                    onClick={() => {
+                      actions.updateItemCount(-1, item.id!);
+                    }}
+                  />
                   {item.quantity}
-                  <Icon iconName="PlusCircle" className={classes.icon} />
+                  <Icon
+                    iconName="PlusCircle"
+                    className={classes.icon}
+                    onClick={() => {
+                      actions.updateItemCount(1, item.id!);
+                    }}
+                  />
                 </td>
                 <td>{item.quantity * item.price}</td>
                 <td>
                   <Icon
                     iconName="XCircle"
-                    onClick={() => removeItem(item.id!)}
+                    onClick={() => actions.removeItem(item.id!)}
                     color="red"
                     className={classes.icon}
                   />

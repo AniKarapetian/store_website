@@ -8,13 +8,14 @@ import { useSelector } from "react-redux";
 import { userSelector } from "../../store/login/login-selector";
 import { updateProfile } from "../../actions/login-actions";
 
-export const UserProfile: React.FC = () => {
+export const UserProfile: React.FC<any> = ({ showAlert }) => {
   const user = useSelector(userSelector);
   const [showModal, setShowModal] = useState(false);
 
   const handleSave = (user: User) => {
     updateProfile(user);
     toggleModal();
+    showAlert("success", "Profile successfully updated!");
   };
 
   const toggleModal = () => {
@@ -23,49 +24,51 @@ export const UserProfile: React.FC = () => {
 
   return (
     <div>
-      <Container>
-        <Row className="justify-content-md-center">
-          <Col xs={12} md={6}>
-            <Image src={user.imageUrl} roundedCircle height={100} />
+      {!!user && (
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col xs={12} md={6}>
+              <Image src={user.imageUrl} roundedCircle height={100} />
 
-            <h2>{`${user.firstName} ${user.lastName}`}</h2>
-            <Button variant="secondary" onClick={toggleModal}>
-              <Icon iconName="Pencil" />
-            </Button>
-            <Form>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Email address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter email"
-                  value={user.email}
-                  disabled
-                />
-              </Form.Group>
+              <h2>{`${user.firstName} ${user.lastName}`}</h2>
+              <Button variant="secondary" onClick={toggleModal}>
+                <Icon iconName="Pencil" />
+              </Button>
+              <Form>
+                <Form.Group controlId="formEmail">
+                  <Form.Label>Email address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter email"
+                    value={user.email}
+                    disabled
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="formPhone">
-                <Form.Label>Phone</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter phone"
-                  value={user.phone}
-                  disabled
-                />
-              </Form.Group>
+                <Form.Group controlId="formPhone">
+                  <Form.Label>Phone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter phone"
+                    value={user.phone}
+                    disabled
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="formRole">
-                <Form.Label>Role</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter role"
-                  value={user.role}
-                  disabled
-                />
-              </Form.Group>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
+                <Form.Group controlId="formRole">
+                  <Form.Label>Role</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Enter role"
+                    value={user.role}
+                    disabled
+                  />
+                </Form.Group>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      )}
       {showModal && user && (
         <UserModal
           data={{ ...user }}

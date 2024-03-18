@@ -16,6 +16,10 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
+
+  const handleRoleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setUser({ ...user, role: event.target.value });
+  };
   return (
     <div
       className="modal show"
@@ -34,6 +38,7 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
               value={user.firstName}
               name="firstName"
               onChange={handleChange}
+              required
             />
           </InputGroup>
           <InputGroup className="mb-3">
@@ -65,13 +70,15 @@ const UserModal: FC<ModalProps> = ({ data, onCancel, onSave }) => {
           </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Text>Role</InputGroup.Text>
-            <Form.Control
-              type="string"
+
+            <Form.Select
+              onChange={handleRoleChange}
               value={user.role}
               disabled={!!user.id}
-              name="role"
-              onChange={handleChange}
-            />
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </Form.Select>
           </InputGroup>
         </Modal.Body>
 

@@ -17,6 +17,10 @@ export const signIn = async (data: Partial<User>) => {
   }
 };
 
+export const signUp = async (data: User) => {
+  await api.user.createUser(data);
+};
+
 export const signOut = () => {
   store.dispatch(logout());
   localStorage.removeItem("user");
@@ -24,4 +28,5 @@ export const signOut = () => {
 export const updateProfile = async (data: User) => {
   const res = await api.user.updateUser(data);
   store.dispatch(editProfile(res));
+  localStorage.setItem("user", JSON.stringify(res));
 };

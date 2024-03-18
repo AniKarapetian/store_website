@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "../../actions/login-actions";
 import { useSelector } from "react-redux";
 import { loginSelector, userSelector } from "../../store/login/login-selector";
-
+import { Link } from "react-router-dom";
 const MenuNavbar: FC = () => {
   const navigate = useNavigate();
   const isLoggedIn = useSelector(loginSelector);
@@ -18,23 +18,41 @@ const MenuNavbar: FC = () => {
     <Navbar bg="secondary" data-bs-theme="dark" fixed="top">
       <Container>
         <Nav className="me-auto">
-          <Nav.Link href="/home">Home</Nav.Link>
-          <Nav.Link href="/products">Products</Nav.Link>
-          {user?.role === "admin" && <Nav.Link href="/users">Users</Nav.Link>}
-          <Nav.Link href="/home"></Nav.Link>
-          <Nav.Link href="/home"></Nav.Link>
+          <Link to="/home" className="nav-link">
+            Home
+          </Link>
+          <Link to="/products" className="nav-link">
+            Products
+          </Link>
+          {user?.role === "admin" && (
+            <Link to="/users" className="nav-link">
+              Users
+            </Link>
+          )}
+          <Link to="/home" className="nav-link"></Link>
+          <Link to="/home" className="nav-link"></Link>
         </Nav>
         {isLoggedIn ? (
           <Nav>
-            <Nav.Link href="/basket">Basket</Nav.Link>
-            <Nav.Link href="/orders">Orders</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Link to="/basket" className="nav-link">
+              Basket
+            </Link>
+            <Link to="/orders" className="nav-link">
+              Orders
+            </Link>
+            <Link to="/profile" className="nav-link">
+              Profile
+            </Link>
             <Nav.Link onClick={onLogout}>Sign Out</Nav.Link>
           </Nav>
         ) : (
           <Nav>
-            <Nav.Link href="/sign-in">Sign In</Nav.Link>
-            <Nav.Link href="/sign-up">Sign Up</Nav.Link>
+            <Link to="/sign-in" className="nav-link">
+              Sign In
+            </Link>
+            <Link to="/sign-up" className="nav-link">
+              Sign Up
+            </Link>
           </Nav>
         )}
       </Container>

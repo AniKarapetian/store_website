@@ -77,7 +77,7 @@ export default {
   },
   user: {
     fetchUsers: async () => {
-      const response = await fetch(API_URL);
+      const response = await fetch(`${API_URL}/users`);
       if (!response.ok) {
         throw new Error("Failed to fetch users");
       }
@@ -85,7 +85,7 @@ export default {
     },
 
     createUser: async (data: User) => {
-      return fetch(API_URL, {
+      return fetch(`${API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export default {
     },
 
     removeUser: async (id: string) => {
-      return fetch(`${API_URL}/${id}`, {
+      return fetch(`${API_URL}/users/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ export default {
 
     updateUser: async (data: User) => {
       {
-        return fetch(`${API_URL}/${data.id}`, {
+        return fetch(`${API_URL}/users/${data.id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -194,8 +194,11 @@ export default {
       const product = await response.json();
       return product;
     },
-    getProducts: async () => {
-      const response = await fetch(`${API_URL}/products`);
+    getProducts: async (searchItem?: string) => {
+      const url = searchItem
+        ? `${API_URL}/products?title=${searchItem}`
+        : `${API_URL}/products`;
+      const response = await fetch(url);
       if (!response.ok) {
         throw new Error("Failed to fetch products");
       }

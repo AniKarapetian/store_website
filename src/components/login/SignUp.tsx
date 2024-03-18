@@ -1,15 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signIn } from "../../actions/login-actions";
+import { signUp } from "../../actions/login-actions";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 
 import { Button, Container } from "react-bootstrap";
 import { User } from "../user/type";
 
-const SignUp: React.FC = () => {
-  const navigate = useNavigate();
-  const [data, setData] = useState<Partial<User>>({
+const SignUp: React.FC<any> = ({ showAlert }) => {
+  const [data, setData] = useState<User>({
+    id: `${Date.now()}`,
+    role: "user",
+    firstName: "",
+    lastName: "",
+    phone: "",
     email: "",
     password: "",
   });
@@ -18,34 +21,38 @@ const SignUp: React.FC = () => {
 
   const handleSignUp = async () => {
     if (!data.email || !data.password) {
-      setError("Please enter both email and password");
+      setError("Please fill all the fields!");
+      return;
+    }
+    if (data.password !== repeatPassword) {
+      setError("Passwords do not match!");
       return;
     }
     setData({
+      id: `${Date.now()}`,
+      role: "user",
+      firstName: "",
+      lastName: "",
+      phone: "",
       email: "",
       password: "",
     });
-    const err = await signIn(data);
-    if (err) {
-      setError(err);
-      return;
-    }
-
-    navigate("/");
+    setRepeatPassword("");
+    await signUp(data);
+    showAlert("success", "You successfully registered!");
     setError("");
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // setData({ ...data, [e.target.name]: e.target.value });
+    setRepeatPassword(e.target.value);
   };
   return (
     <Container style={{ width: "450px" }}>
       <h2>Sign Up</h2>
       {error && <div style={{ color: "red" }}>{error}</div>}
       <Form>
-        {" "}
         <InputGroup className="mb-3">
           <InputGroup.Text>Name</InputGroup.Text>
           <Form.Control

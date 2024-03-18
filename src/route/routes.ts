@@ -51,7 +51,7 @@ export const routes: RouteType[] = [
   {
     type: "private",
     Component: ProductPage,
-    path: "/products/1",
+    path: "/products/:id",
     name: "Product Details",
   },
   {

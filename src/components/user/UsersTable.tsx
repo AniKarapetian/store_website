@@ -1,14 +1,17 @@
 import React, { FC, useState } from "react";
 import { Table, Button } from "react-bootstrap";
-import { createUser, removeUser, updateUser } from "../../actions/user-actions";
 import UserModal from "./UserModal";
 import { User } from "./type";
 import { Icon } from "../base-components/Icon";
 type TableProps = {
   users: User[];
+  actions: {
+    remove: (id: string) => void;
+    save: (user: User) => void;
+  };
 };
 
-const UsersTable: FC<TableProps> = ({ users }) => {
+const UsersTable: FC<TableProps> = ({ users, actions }) => {
   const [showModal, setShowModal] = useState(false);
   const [user, setUser] = useState<User>({
     id: "",
@@ -24,11 +27,7 @@ const UsersTable: FC<TableProps> = ({ users }) => {
   };
 
   const handleSave = (user: User) => {
-    if (user.id) {
-      updateUser(user);
-    } else {
-      createUser(user);
-    }
+    actions.save(user);
     handleCancel();
   };
   const handleCancel = () => {
@@ -47,7 +46,7 @@ const UsersTable: FC<TableProps> = ({ users }) => {
     setShowModal(!showModal);
   };
   const handleDelete = (id: string) => {
-    removeUser(id);
+    actions.remove(id);
   };
 
   const handleEdit = (user: User) => {

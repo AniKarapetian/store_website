@@ -1,12 +1,17 @@
 import { Product } from "../components/product/type";
 import api from "./api";
 
-export const getProducts = async (): Promise<Product[]> => {
-  const data = await api.product.getProducts();
+export const getProducts = async (searchItem?: string): Promise<Product[]> => {
+  let data = [];
+  if (searchItem) {
+    data = await api.product.getProducts(searchItem);
+  } else {
+    data = await api.product.getProducts();
+  }
   return data;
 };
 
-export const createProduct = async (newData: Product) => {
+export const createProduct = async (newData: Product): Promise<Product> => {
   const data = await api.product.createProduct(newData);
   return data;
 };
